@@ -1,0 +1,164 @@
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 14px 16px;
+  box-shadow: 0 1px 4px rgba(92, 107, 192, 0.08);
+  transition: box-shadow 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+  border-left: 3px solid transparent;
+}
+
+.todo-item:hover {
+  box-shadow: 0 4px 12px rgba(92, 107, 192, 0.15);
+  transform: translateY(-1px);
+}
+
+.todo-item--completed {
+  opacity: 0.6;
+}
+
+.todo-item--completed .todo-item__text {
+  text-decoration: line-through;
+  color: #9e9e9e;
+}
+
+/* Custom checkbox */
+.todo-item__checkbox-label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.todo-item__checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.todo-item__checkmark {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #c5cae9;
+  border-radius: 6px;
+  background: #ffffff;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  position: relative;
+}
+
+.todo-item__checkbox:checked + .todo-item__checkmark {
+  background: #5c6bc0;
+  border-color: #5c6bc0;
+}
+
+.todo-item__checkbox:checked + .todo-item__checkmark::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 6px;
+  height: 10px;
+  border: 2px solid #ffffff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+.todo-item__checkbox:focus + .todo-item__checkmark {
+  outline: 2px solid #5c6bc0;
+  outline-offset: 2px;
+}
+
+/* Text */
+.todo-item__text {
+  flex: 1;
+  font-size: 15px;
+  color: #333;
+  line-height: 1.4;
+  word-break: break-word;
+  transition: color 0.2s ease;
+}
+
+/* D-Day 배지 - 마감일까지 남은 일수를 보여줍니다 */
+.todo-item__due-badge {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+/* 기한 초과 배지 - 진한 빨강 배경으로 강조합니다 */
+.todo-item__due-badge--overdue {
+  font-weight: 800;
+}
+
+/* 중요도 배지 - 할일의 우선순위를 색상과 텍스트로 보여줍니다 */
+.todo-item__priority-badge {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+/* 카테고리 배지 - 할일이 속한 분류를 보여줍니다 */
+.todo-item__badge {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid;
+  letter-spacing: 0.3px;
+}
+
+/* Delete button */
+.todo-item__delete {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: #bdbdbd;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  border-radius: 4px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.todo-item__delete:hover {
+  color: #ef5350;
+  background: #ffebee;
+}
+
+/* 모바일 화면(600px 이하)에서는 배지들이 아래 줄로 내려갑니다 */
+@media (max-width: 600px) {
+  .todo-item {
+    flex-wrap: wrap;
+  }
+
+  .todo-item__priority-badge {
+    order: 3;
+  }
+
+  .todo-item__badge {
+    order: 4;
+    margin-left: auto;
+  }
+
+  .todo-item__delete {
+    order: 5;
+  }
+}

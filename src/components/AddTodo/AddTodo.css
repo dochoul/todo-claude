@@ -1,0 +1,126 @@
+.add-todo {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(92, 107, 192, 0.12);
+  margin-bottom: 20px;
+}
+
+.add-todo__input {
+  flex: 1;
+  border: 2px solid #e8eaf6;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 15px;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s ease;
+  background: #f8f9ff;
+}
+
+.add-todo__input::placeholder {
+  color: #b0b7d4;
+}
+
+.add-todo__input:focus {
+  border-color: #5c6bc0;
+  background: #ffffff;
+}
+
+.add-todo__select {
+  border: 2px solid #e8eaf6;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: #555;
+  background: #f8f9ff;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%235C6BC0' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 30px;
+}
+
+.add-todo__select:focus {
+  border-color: #5c6bc0;
+  background-color: #ffffff;
+}
+
+.add-todo__button {
+  background: #5c6bc0;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  white-space: nowrap;
+}
+
+.add-todo__button:hover:not(:disabled) {
+  background: #3f51b5;
+  transform: translateY(-1px);
+}
+
+.add-todo__button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.add-todo__button:disabled {
+  background: #c5cae9;
+  cursor: not-allowed;
+}
+
+/* 마감일 날짜 입력창 스타일 */
+.add-todo__date {
+  border: 2px solid #e8eaf6;
+  border-radius: 8px;
+  padding: 10px 10px;
+  font-size: 14px;
+  color: #555;
+  background: #f8f9ff;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  width: 140px; /* 날짜 형식에 맞게 고정 너비 */
+}
+
+.add-todo__date:focus {
+  border-color: #5c6bc0;
+  background: #ffffff;
+}
+
+/* 날짜가 비어있을 때 placeholder처럼 보이게 합니다 */
+.add-todo__date:not(:focus):not([value]) {
+  color: #b0b7d4;
+}
+
+@media (max-width: 600px) {
+  .add-todo {
+    flex-wrap: wrap;
+  }
+
+  .add-todo__input {
+    flex: 1 1 100%;
+  }
+
+  .add-todo__select {
+    flex: 1;
+  }
+
+  .add-todo__date {
+    flex: 1;
+  }
+
+  .add-todo__button {
+    flex: 1;
+  }
+}

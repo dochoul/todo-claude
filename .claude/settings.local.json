@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(npm install:*)"
+    ]
+  },
+  "enabledPlugins": {
+    "bkit@bkit-marketplace": true
+  }
+}

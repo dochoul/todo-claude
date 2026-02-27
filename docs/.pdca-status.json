@@ -1,0 +1,220 @@
+{
+  "version": "2.0",
+  "lastUpdated": "2026-02-27T13:15:12.800Z",
+  "activeFeatures": [
+    "todo-claude",
+    "TodoList",
+    "CategoryFilter",
+    "AddTodo",
+    "TodoItem",
+    "due-date"
+  ],
+  "primaryFeature": "todo-claude",
+  "features": {
+    "todo-claude": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-02-27T12:52:57.253Z",
+        "lastUpdated": "2026-02-27T13:05:54.222Z"
+      },
+      "lastFile": "/Users/david/Documents/todo-claude/src/hooks/useTodos.ts"
+    },
+    "TodoList": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-02-27T12:53:32.551Z",
+        "lastUpdated": "2026-02-27T12:53:32.551Z"
+      },
+      "lastFile": "/Users/david/Documents/todo-claude/src/components/TodoList/TodoList.tsx"
+    },
+    "CategoryFilter": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-02-27T12:53:45.840Z",
+        "lastUpdated": "2026-02-27T13:07:20.927Z"
+      },
+      "lastFile": "/Users/david/Documents/todo-claude/src/components/CategoryFilter/CategoryFilter.tsx"
+    },
+    "AddTodo": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-02-27T13:06:20.121Z",
+        "lastUpdated": "2026-02-27T13:15:12.800Z"
+      },
+      "lastFile": "/Users/david/Documents/todo-claude/src/components/AddTodo/AddTodo.tsx"
+    },
+    "TodoItem": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-02-27T13:06:55.911Z",
+        "lastUpdated": "2026-02-27T13:06:55.911Z"
+      },
+      "lastFile": "/Users/david/Documents/todo-claude/src/components/TodoItem/TodoItem.tsx"
+    },
+    "due-date": {
+      "phase": "act",
+      "phaseNumber": 5,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-02-27T13:10:43.861Z",
+        "lastUpdated": "2026-02-27T13:10:43.861Z"
+      },
+      "previousPhase": "check",
+      "autoAdvanced": true
+    }
+  },
+  "pipeline": {
+    "currentPhase": 1,
+    "level": "Dynamic",
+    "phaseHistory": []
+  },
+  "session": {
+    "startedAt": "2026-02-27T12:51:35.457Z",
+    "onboardingCompleted": false,
+    "lastActivity": "2026-02-27T13:15:12.800Z"
+  },
+  "history": [
+    {
+      "timestamp": "2026-02-27T12:52:57.253Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-27T12:53:02.110Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-27T12:53:07.550Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-27T12:53:14.801Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-27T12:53:17.466Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-27T12:53:22.233Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-27T12:53:32.551Z",
+      "feature": "TodoList",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-27T12:53:45.840Z",
+      "feature": "CategoryFilter",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-27T13:05:14.465Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-27T13:05:35.261Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-27T13:05:44.567Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-27T13:05:54.222Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-27T13:06:20.121Z",
+      "feature": "AddTodo",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-27T13:06:55.911Z",
+      "feature": "TodoItem",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-27T13:07:20.927Z",
+      "feature": "CategoryFilter",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-27T13:10:43.861Z",
+      "feature": "due-date",
+      "phase": "act",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-27T13:15:02.172Z",
+      "feature": "AddTodo",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-27T13:15:07.519Z",
+      "feature": "AddTodo",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-02-27T13:15:12.800Z",
+      "feature": "AddTodo",
+      "phase": "do",
+      "action": "updated"
+    }
+  ]
+}
