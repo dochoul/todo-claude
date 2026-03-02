@@ -54,8 +54,10 @@ export function AddTodo({ onAdd }: AddTodoProps) {
   }
 
   // 키보드 입력을 감지하는 함수 - Enter 키를 누르면 할일이 추가됩니다
+  // isComposing 체크: 한국어/일본어 등 IME 조합 중에는 Enter를 무시합니다
+  // (조합 중 Enter를 허용하면 "하이" + "이" 처럼 두 번 생성되는 버그가 발생합니다)
   function handleKeyDown(e: KeyboardEvent<HTMLInputElement>): void {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
       handleSubmit();
     }
   }
@@ -111,7 +113,9 @@ export function AddTodo({ onAdd }: AddTodoProps) {
       />
 
       {/* 할일 추가 버튼 - 내용이 없으면 비활성화됩니다 */}
+      {/* type="button"을 명시해서 Enter 키로 인한 자동 클릭을 방지합니다 */}
       <button
+        type="button"
         className="add-todo__button"
         onClick={handleSubmit}
         disabled={!text.trim()}

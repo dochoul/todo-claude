@@ -6,7 +6,7 @@ import { TodoList } from './components/TodoList/TodoList';
 import './App.css';
 
 export function App() {
-  const { addTodo, deleteTodo, toggleTodo, filter, setFilter, filteredTodos, todoCounts } =
+  const { addTodo, updateTodo, deleteTodo, toggleTodo, filter, setFilter, filteredTodos, todoCounts } =
     useTodos();
 
   // 현재 필터 기준으로 완료된 할일 개수
@@ -55,6 +55,7 @@ export function App() {
           todos={filteredTodos}
           onToggle={toggleTodo}
           onDelete={deleteTodo}
+          onUpdate={updateTodo}
         />
       </div>
     </div>
