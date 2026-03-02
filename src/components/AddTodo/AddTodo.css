@@ -2,44 +2,45 @@
   display: flex;
   gap: 8px;
   align-items: center;
-  background: #ffffff;
+  background: var(--color-card);
   border-radius: 12px;
   padding: 16px;
-  box-shadow: 0 2px 8px rgba(92, 107, 192, 0.12);
+  box-shadow: var(--shadow-md);
   margin-bottom: 20px;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .add-todo__input {
   flex: 1;
-  border: 2px solid #e8eaf6;
+  border: 2px solid var(--color-border);
   border-radius: 8px;
   padding: 10px 14px;
   font-size: 15px;
-  color: #333;
+  color: var(--color-text);
   outline: none;
-  transition: border-color 0.2s ease;
-  background: #f8f9ff;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  background: var(--color-input-bg);
 }
 
 .add-todo__input::placeholder {
-  color: #b0b7d4;
+  color: var(--color-placeholder);
 }
 
 .add-todo__input:focus {
-  border-color: #5c6bc0;
-  background: #ffffff;
+  border-color: var(--color-primary);
+  background: var(--color-card);
 }
 
 .add-todo__select {
-  border: 2px solid #e8eaf6;
+  border: 2px solid var(--color-border);
   border-radius: 8px;
   padding: 10px 12px;
   font-size: 14px;
-  color: #555;
-  background: #f8f9ff;
+  color: var(--color-text-medium);
+  background: var(--color-input-bg);
   outline: none;
   cursor: pointer;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%235C6BC0' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -48,12 +49,12 @@
 }
 
 .add-todo__select:focus {
-  border-color: #5c6bc0;
-  background-color: #ffffff;
+  border-color: var(--color-primary);
+  background-color: var(--color-card);
 }
 
 .add-todo__button {
-  background: #5c6bc0;
+  background: var(--color-primary);
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -66,7 +67,7 @@
 }
 
 .add-todo__button:hover:not(:disabled) {
-  background: #3f51b5;
+  background: var(--color-primary-hover);
   transform: translateY(-1px);
 }
 
@@ -75,32 +76,32 @@
 }
 
 .add-todo__button:disabled {
-  background: #c5cae9;
+  background: var(--color-border-medium);
   cursor: not-allowed;
 }
 
 /* 마감일 날짜 입력창 스타일 */
 .add-todo__date {
-  border: 2px solid #e8eaf6;
+  border: 2px solid var(--color-border);
   border-radius: 8px;
   padding: 10px 10px;
   font-size: 14px;
-  color: #555;
-  background: #f8f9ff;
+  color: var(--color-text-medium);
+  background: var(--color-input-bg);
   outline: none;
   cursor: pointer;
-  transition: border-color 0.2s ease;
-  width: 140px; /* 날짜 형식에 맞게 고정 너비 */
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  width: 140px;
 }
 
 .add-todo__date:focus {
-  border-color: #5c6bc0;
-  background: #ffffff;
+  border-color: var(--color-primary);
+  background: var(--color-card);
 }
 
 /* 날짜가 비어있을 때 placeholder처럼 보이게 합니다 */
 .add-todo__date:not(:focus):not([value]) {
-  color: #b0b7d4;
+  color: var(--color-placeholder);
 }
 
 @media (max-width: 600px) {
