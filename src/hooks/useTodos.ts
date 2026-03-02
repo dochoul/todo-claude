@@ -65,6 +65,16 @@ export function useTodos() {
     setTodos((prev) => prev.filter((todo) => todo.id !== id));
   }
 
+  // 할일 내용을 수정하는 함수
+  // id: 수정할 할일의 고유 식별자, updates: 바꿀 필드만 부분적으로 전달합니다
+  function updateTodo(id: string, updates: Partial<Pick<Todo, 'text' | 'category' | 'priority' | 'dueDate'>>): void {
+    setTodos((prev) =>
+      prev.map((todo) =>
+        todo.id === id ? { ...todo, ...updates } : todo
+      )
+    );
+  }
+
   // 할일 완료 상태를 토글(전환)하는 함수
   // id: 상태를 바꿀 할일의 고유 식별자
   function toggleTodo(id: string): void {
@@ -101,6 +111,7 @@ export function useTodos() {
   return {
     todos,
     addTodo,
+    updateTodo,
     deleteTodo,
     toggleTodo,
     filter,

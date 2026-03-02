@@ -124,6 +124,30 @@
   letter-spacing: 0.3px;
 }
 
+/* 편집 버튼 - 기본적으로 숨겨져 있다가 호버 시 나타납니다 */
+.todo-item__edit {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: #bdbdbd;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  border-radius: 4px;
+  transition: color 0.2s ease, background 0.2s ease;
+  opacity: 0; /* 기본적으로 숨깁니다 */
+}
+
+.todo-item:hover .todo-item__edit {
+  opacity: 1; /* 카드에 호버하면 나타납니다 */
+}
+
+.todo-item__edit:hover {
+  color: #5c6bc0;
+  background: #e8eaf6;
+}
+
 /* Delete button */
 .todo-item__delete {
   flex-shrink: 0;
@@ -139,6 +163,110 @@
 }
 
 .todo-item__delete:hover {
+  color: #ef5350;
+  background: #ffebee;
+}
+
+/* ── 편집 모드 스타일 ── */
+
+/* 편집 모드일 때 카드 스타일 - 파란 테두리로 강조합니다 */
+.todo-item--editing {
+  border-left-color: #5c6bc0 !important;
+  box-shadow: 0 0 0 2px #c5cae9;
+  gap: 8px;
+}
+
+/* 편집 모드 텍스트 input */
+.todo-item__edit-input {
+  flex: 1;
+  border: 1px solid #c5cae9;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+  background: #f8f9ff;
+  min-width: 0; /* flex 안에서 줄어들 수 있게 합니다 */
+}
+
+.todo-item__edit-input:focus {
+  border-color: #5c6bc0;
+  background: #fff;
+}
+
+/* 편집 모드 드롭다운 */
+.todo-item__edit-select {
+  border: 1px solid #c5cae9;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 13px;
+  color: #555;
+  background: #f8f9ff;
+  outline: none;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.todo-item__edit-select:focus {
+  border-color: #5c6bc0;
+}
+
+/* 편집 모드 날짜 input */
+.todo-item__edit-date {
+  border: 1px solid #c5cae9;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 13px;
+  color: #555;
+  background: #f8f9ff;
+  outline: none;
+  cursor: pointer;
+  width: 130px;
+  flex-shrink: 0;
+}
+
+.todo-item__edit-date:focus {
+  border-color: #5c6bc0;
+}
+
+/* 저장 버튼 - 초록색 체크 표시 */
+.todo-item__edit-save {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: #4CAF50;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0 4px;
+  border-radius: 4px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.todo-item__edit-save:hover:not(:disabled) {
+  background: #e8f5e9;
+}
+
+.todo-item__edit-save:disabled {
+  color: #bdbdbd;
+  cursor: not-allowed;
+}
+
+/* 취소 버튼 */
+.todo-item__edit-cancel {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: #bdbdbd;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+  border-radius: 4px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.todo-item__edit-cancel:hover {
   color: #ef5350;
   background: #ffebee;
 }

@@ -92,6 +92,15 @@ export function toMidnightTimestamp(dateStr: string): number {
   return new Date(dateStr + 'T00:00:00').getTime();
 }
 
+// 타임스탬프를 날짜 input용 "YYYY-MM-DD" 문자열로 변환하는 함수 (편집 모드에 사용)
+export function timestampToDateStr(timestamp: number): string {
+  const d = new Date(timestamp);
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
 // 할일의 마감일이 오늘인지 확인하는 함수 ('오늘 마감' 필터에 사용)
 export function isTodayDue(todo: Todo): boolean {
   if (todo.dueDate === undefined) return false;

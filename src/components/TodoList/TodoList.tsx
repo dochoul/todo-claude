@@ -7,10 +7,11 @@ interface TodoListProps {
   todos: Todo[];                    // 표시할 할일 목록
   onToggle: (id: string) => void;  // 완료 상태를 바꿀 때 호출하는 함수
   onDelete: (id: string) => void;  // 할일을 삭제할 때 호출하는 함수
+  onUpdate: (id: string, updates: Partial<Pick<Todo, 'text' | 'category' | 'priority' | 'dueDate'>>) => void; // 할일을 수정할 때 호출하는 함수
 }
 
 // 할일 목록 전체를 렌더링하는 컴포넌트
-export function TodoList({ todos, onToggle, onDelete }: TodoListProps) {
+export function TodoList({ todos, onToggle, onDelete, onUpdate }: TodoListProps) {
   // 할일이 없을 때 안내 메시지를 보여줍니다
   if (todos.length === 0) {
     return (
@@ -28,7 +29,7 @@ export function TodoList({ todos, onToggle, onDelete }: TodoListProps) {
       {todos.map((todo) => (
         // 각 할일을 리스트 아이템(li)으로 감싸서 표시합니다
         <li key={todo.id} className="todo-list__item">
-          <TodoItem todo={todo} onToggle={onToggle} onDelete={onDelete} />
+          <TodoItem todo={todo} onToggle={onToggle} onDelete={onDelete} onUpdate={onUpdate} />
         </li>
       ))}
     </ul>
