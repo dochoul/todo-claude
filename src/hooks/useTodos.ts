@@ -1,105 +1,187 @@
 import { useState, useEffect, useMemo } from 'react';
+import type { User } from '@supabase/supabase-js';
+import { supabase } from '../lib/supabase';
 import { Todo, Category, Priority, Filter, CATEGORIES, isTodayDue } from '../types/todo';
 
-// 로컬스토리지에 저장할 때 사용하는 키 이름
-const STORAGE_KEY = 'todos';
-
-// 로컬스토리지에서 저장된 할일 목록을 불러오는 함수
-function loadFromStorage(): Todo[] {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    // 저장된 데이터가 없으면 빈 배열을 반환합니다
-    if (!raw) return [];
-    return JSON.parse(raw) as Todo[];
-  } catch {
-    // JSON 파싱 오류 등 예외 상황에서는 빈 배열을 반환합니다
-    return [];
-  }
+// Supabase DB에서 반환하는 행 타입 정의
+// DB 컬럼명은 snake_case이므로 camelCase로 변환해야 합니다
+interface TodoRow {
+  id: string;
+  user_id: string;
+  text: string;
+  completed: boolean;
+  category: Category;
+  priority: Priority;
+  due_date: number | null;
+  created_at: number;
 }
 
-// 할일 목록을 로컬스토리지에 저장하는 함수
-function saveToStorage(todos: Todo[]): void {
-  // 배열을 JSON 문자열로 변환해서 저장합니다
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+// DB 행을 앱에서 사용하는 Todo 객체로 변환하는 함수
+function rowToTodo(row: TodoRow): Todo {
+  return {
+    id: row.id,
+    text: row.text,
+    completed: row.completed,
+    category: row.category,
+    priority: row.priority,
+    createdAt: row.created_at,
+    dueDate: row.due_date ?? undefined, // null → undefined로 변환
+  };
 }
 
-// 투두 상태를 관리하는 커스텀 훅
-// 이 훅을 사용하면 할일 추가/삭제/완료 처리를 쉽게 할 수 있습니다
-export function useTodos() {
-  // 할일 목록 상태 - 처음에는 로컬스토리지에서 불러옵니다
-  const [todos, setTodos] = useState<Todo[]>(() => loadFromStorage());
+// 투두 상태를 관리하는 커스텀 훅 (Supabase 연동 버전)
+// user: 현재 로그인한 사용자 (null이면 훅이 동작하지 않습니다)
+export function useTodos(user: User | null) {
+  // 할일 목록 상태
+  const [todos, setTodos] = useState<Todo[]>([]);
 
   // 현재 선택된 필터 상태 ('all' = 전체 보기)
   const [filter, setFilter] = useState<Filter>('all');
 
-  // todos가 바뀔 때마다 자동으로 로컬스토리지에 저장합니다
+  // 데이터를 불러오는 중인지 여부
+  const [loading, setLoading] = useState(false);
+
+  // DB 작업 오류 메시지
+  const [error, setError] = useState<string | null>(null);
+
+  // 로그인한 사용자가 바뀔 때마다 해당 사용자의 할일을 불러옵니다
   useEffect(() => {
-    saveToStorage(todos);
-  }, [todos]);
+    if (!user) {
+      // 로그인하지 않은 경우 목록을 비웁니다
+      setTodos([]);
+      return;
+    }
+    fetchTodos();
+  }, [user]);
 
-  // 새 할일을 추가하는 함수
-  // text: 할일 내용, category: 카테고리, priority: 중요도, dueDate: 마감일(선택사항)
-  function addTodo(text: string, category: Category, priority: Priority, dueDate?: number): void {
-    const trimmed = text.trim(); // 앞뒤 공백 제거
-    if (!trimmed) return; // 내용이 없으면 추가하지 않습니다
+  // Supabase에서 현재 사용자의 할일 목록을 가져오는 함수
+  async function fetchTodos(): Promise<void> {
+    setLoading(true);
+    setError(null);
+    const { data, error: fetchError } = await supabase
+      .from('todos')
+      .select('*')
+      .order('created_at', { ascending: false }); // 최신 항목이 위에 오도록 정렬
 
-    // 새 할일 객체를 만듭니다
-    const newTodo: Todo = {
-      id: crypto.randomUUID(), // 고유한 ID 자동 생성
-      text: trimmed,
-      completed: false, // 처음에는 미완료 상태
-      category,
-      priority, // 사용자가 선택한 중요도
-      createdAt: Date.now(), // 현재 시간을 저장
-      dueDate,  // 마감일 (없으면 undefined로 저장됩니다)
-    };
-
-    // 새 할일을 목록 맨 앞에 추가합니다 (최신 항목이 위에 보이도록)
-    setTodos((prev) => [newTodo, ...prev]);
+    if (fetchError) {
+      setError('할일을 불러오는 중 오류가 발생했습니다.');
+      console.error(fetchError);
+    } else {
+      // DB 행 목록을 Todo 객체 배열로 변환합니다
+      setTodos((data as TodoRow[]).map(rowToTodo));
+    }
+    setLoading(false);
   }
 
-  // 특정 할일을 삭제하는 함수
-  // id: 삭제할 할일의 고유 식별자
-  function deleteTodo(id: string): void {
-    // 해당 id를 가진 할일만 제외하고 나머지를 유지합니다
-    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+  // 새 할일을 Supabase에 추가하는 함수
+  async function addTodo(text: string, category: Category, priority: Priority, dueDate?: number): Promise<void> {
+    const trimmed = text.trim(); // 앞뒤 공백 제거
+    if (!trimmed || !user) return; // 내용이 없거나 로그인하지 않은 경우 중단
+
+    // DB에 삽입할 행 데이터를 구성합니다 (snake_case 컬럼명 사용)
+    const newRow = {
+      user_id: user.id,        // RLS 정책에서 사용자를 구분하는 키
+      text: trimmed,
+      completed: false,
+      category,
+      priority,
+      created_at: Date.now(),  // 현재 시각 (밀리초 타임스탬프)
+      due_date: dueDate ?? null, // undefined → null로 변환 (DB는 null 사용)
+    };
+
+    const { data, error: insertError } = await supabase
+      .from('todos')
+      .insert(newRow)
+      .select()
+      .single(); // 삽입된 행을 바로 반환받습니다
+
+    if (insertError) {
+      setError('할일을 추가하는 중 오류가 발생했습니다.');
+      console.error(insertError);
+    } else {
+      // 서버에서 반환된 데이터를 상태에 추가합니다 (맨 앞에 추가)
+      setTodos((prev) => [rowToTodo(data as TodoRow), ...prev]);
+    }
+  }
+
+  // 특정 할일을 Supabase에서 삭제하는 함수
+  async function deleteTodo(id: string): Promise<void> {
+    // 먼저 화면에서 즉시 제거합니다 (낙관적 업데이트 - 빠른 UX 제공)
+    setTodos((prev) => prev.filter((t) => t.id !== id));
+
+    const { error: deleteError } = await supabase
+      .from('todos')
+      .delete()
+      .eq('id', id); // id가 일치하는 행만 삭제합니다
+
+    if (deleteError) {
+      // 삭제에 실패하면 다시 목록을 불러옵니다
+      setError('할일을 삭제하는 중 오류가 발생했습니다.');
+      fetchTodos();
+    }
   }
 
   // 할일 내용을 수정하는 함수
   // id: 수정할 할일의 고유 식별자, updates: 바꿀 필드만 부분적으로 전달합니다
-  function updateTodo(id: string, updates: Partial<Pick<Todo, 'text' | 'category' | 'priority' | 'dueDate'>>): void {
+  async function updateTodo(id: string, updates: Partial<Pick<Todo, 'text' | 'category' | 'priority' | 'dueDate'>>): Promise<void> {
+    // 화면 먼저 업데이트 (낙관적 업데이트)
     setTodos((prev) =>
-      prev.map((todo) =>
-        todo.id === id ? { ...todo, ...updates } : todo
-      )
+      prev.map((t) => (t.id === id ? { ...t, ...updates } : t))
     );
+
+    // DB 컬럼명으로 변환합니다 (dueDate → due_date)
+    const dbUpdates: Record<string, unknown> = { ...updates };
+    if ('dueDate' in updates) {
+      dbUpdates['due_date'] = updates.dueDate ?? null;
+      delete dbUpdates['dueDate'];
+    }
+
+    const { error: updateError } = await supabase
+      .from('todos')
+      .update(dbUpdates)
+      .eq('id', id);
+
+    if (updateError) {
+      setError('할일을 수정하는 중 오류가 발생했습니다.');
+      fetchTodos(); // 실패 시 서버 상태로 복원합니다
+    }
   }
 
   // 할일 완료 상태를 토글(전환)하는 함수
-  // id: 상태를 바꿀 할일의 고유 식별자
-  function toggleTodo(id: string): void {
+  async function toggleTodo(id: string): Promise<void> {
+    // 현재 상태를 찾아서 반전시킵니다
+    const todo = todos.find((t) => t.id === id);
+    if (!todo) return;
+    const newCompleted = !todo.completed;
+
+    // 화면 먼저 업데이트 (낙관적 업데이트)
     setTodos((prev) =>
-      prev.map((todo) =>
-        // 해당 id의 할일만 completed 값을 반전시킵니다
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
+      prev.map((t) => (t.id === id ? { ...t, completed: newCompleted } : t))
     );
+
+    const { error: toggleError } = await supabase
+      .from('todos')
+      .update({ completed: newCompleted })
+      .eq('id', id);
+
+    if (toggleError) {
+      setError('할일 상태를 변경하는 중 오류가 발생했습니다.');
+      fetchTodos(); // 실패 시 서버 상태로 복원합니다
+    }
   }
 
   // 필터링된 할일 목록 - 선택된 필터에 맞는 할일만 반환합니다
-  // useMemo를 사용해서 todos나 filter가 바뀔 때만 다시 계산합니다 (성능 최적화)
   const filteredTodos = useMemo<Todo[]>(() => {
-    if (filter === 'all') return todos;              // 전체 보기
-    if (filter === 'today') return todos.filter(isTodayDue); // 오늘 마감 필터
-    return todos.filter((todo) => todo.category === filter); // 카테고리 필터
+    if (filter === 'all') return todos;
+    if (filter === 'today') return todos.filter(isTodayDue);
+    return todos.filter((t) => t.category === filter);
   }, [todos, filter]);
 
   // 각 필터별 할일 개수 - 필터 버튼에 표시할 숫자를 계산합니다
-  // todos가 바뀔 때만 다시 계산합니다 (성능 최적화)
   const todoCounts = useMemo<Record<Filter, number>>(() => {
     const counts: Record<Filter, number> = {
       all: todos.length,
-      today: todos.filter(isTodayDue).length, // 오늘 마감인 할일 개수
+      today: todos.filter(isTodayDue).length,
     } as Record<Filter, number>;
     for (const cat of CATEGORIES) {
       counts[cat] = todos.filter((t) => t.category === cat).length;
@@ -107,7 +189,6 @@ export function useTodos() {
     return counts;
   }, [todos]);
 
-  // 이 훅이 제공하는 상태와 함수들을 반환합니다
   return {
     todos,
     addTodo,
@@ -118,5 +199,7 @@ export function useTodos() {
     setFilter,
     filteredTodos,
     todoCounts,
+    loading,
+    error,
   };
 }

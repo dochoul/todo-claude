@@ -1,0 +1,181 @@
+/* 로그인/회원가입 화면 전체 배경 */
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-gradient);
+  padding: 24px;
+  transition: background 0.3s ease;
+}
+
+/* 로그인 카드 컨테이너 */
+.auth-card {
+  background: var(--color-card);
+  border-radius: 16px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: var(--shadow-auth);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 앱 제목 영역 */
+.auth-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+/* 체크 아이콘 */
+.auth-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: var(--color-primary);
+  color: #ffffff;
+  border-radius: 12px;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  transition: background 0.3s ease;
+}
+
+/* 앱 제목 */
+.auth-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0 0 6px;
+  transition: color 0.3s ease;
+}
+
+/* 부제목 */
+.auth-subtitle {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+/* 로그인/회원가입 탭 영역 */
+.auth-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 24px;
+  background: var(--color-surface);
+  border-radius: 8px;
+  padding: 4px;
+  transition: background 0.3s ease;
+}
+
+/* 탭 버튼 기본 스타일 */
+.auth-tab {
+  flex: 1;
+  padding: 8px 0;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  background: transparent;
+  color: var(--color-text-muted);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* 선택된 탭 */
+.auth-tab--active {
+  background: var(--color-card);
+  color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 입력 필드 그룹 */
+.auth-field {
+  margin-bottom: 16px;
+}
+
+/* 레이블 */
+.auth-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-medium);
+  margin-bottom: 6px;
+  transition: color 0.3s ease;
+}
+
+/* 텍스트 입력 필드 */
+.auth-input {
+  width: 100%;
+  border: 1px solid var(--color-border-medium);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: var(--color-text);
+  background: var(--color-input-bg);
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.auth-input:focus {
+  border-color: var(--color-primary);
+  background: var(--color-card);
+}
+
+/* 오류 메시지 */
+.auth-error {
+  font-size: 13px;
+  color: #ef5350;
+  background: #ffebee;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  margin-top: -4px;
+}
+
+/* 회원가입 완료 안내 메시지 */
+.auth-success {
+  font-size: 13px;
+  color: #388e3c;
+  background: #e8f5e9;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  margin-top: -4px;
+}
+
+/* 제출 버튼 */
+.auth-submit {
+  width: 100%;
+  padding: 12px;
+  background: var(--color-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.auth-submit:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+  transform: translateY(-1px);
+}
+
+.auth-submit:disabled {
+  background: var(--color-border-medium);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* 모바일 */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 28px 20px;
+  }
+}

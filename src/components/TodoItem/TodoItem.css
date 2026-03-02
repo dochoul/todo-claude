@@ -2,16 +2,16 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background: #ffffff;
+  background: var(--color-card);
   border-radius: 10px;
   padding: 14px 16px;
-  box-shadow: 0 1px 4px rgba(92, 107, 192, 0.08);
-  transition: box-shadow 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease, transform 0.2s ease, opacity 0.2s ease, background 0.3s ease;
   border-left: 3px solid transparent;
 }
 
 .todo-item:hover {
-  box-shadow: 0 4px 12px rgba(92, 107, 192, 0.15);
+  box-shadow: var(--shadow-hover);
   transform: translateY(-1px);
 }
 
@@ -21,7 +21,7 @@
 
 .todo-item--completed .todo-item__text {
   text-decoration: line-through;
-  color: #9e9e9e;
+  color: var(--color-text-muted);
 }
 
 /* Custom checkbox */
@@ -44,16 +44,16 @@
   display: inline-block;
   width: 20px;
   height: 20px;
-  border: 2px solid #c5cae9;
+  border: 2px solid var(--color-border-medium);
   border-radius: 6px;
-  background: #ffffff;
+  background: var(--color-card);
   transition: background 0.2s ease, border-color 0.2s ease;
   position: relative;
 }
 
 .todo-item__checkbox:checked + .todo-item__checkmark {
-  background: #5c6bc0;
-  border-color: #5c6bc0;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
 }
 
 .todo-item__checkbox:checked + .todo-item__checkmark::after {
@@ -70,7 +70,7 @@
 }
 
 .todo-item__checkbox:focus + .todo-item__checkmark {
-  outline: 2px solid #5c6bc0;
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
@@ -78,13 +78,13 @@
 .todo-item__text {
   flex: 1;
   font-size: 15px;
-  color: #333;
+  color: var(--color-text);
   line-height: 1.4;
   word-break: break-word;
   transition: color 0.2s ease;
 }
 
-/* D-Day 배지 - 마감일까지 남은 일수를 보여줍니다 */
+/* D-Day 배지 */
 .todo-item__due-badge {
   flex-shrink: 0;
   font-size: 12px;
@@ -96,12 +96,11 @@
   white-space: nowrap;
 }
 
-/* 기한 초과 배지 - 진한 빨강 배경으로 강조합니다 */
 .todo-item__due-badge--overdue {
   font-weight: 800;
 }
 
-/* 중요도 배지 - 할일의 우선순위를 색상과 텍스트로 보여줍니다 */
+/* 중요도 배지 */
 .todo-item__priority-badge {
   flex-shrink: 0;
   font-size: 12px;
@@ -113,7 +112,7 @@
   white-space: nowrap;
 }
 
-/* 카테고리 배지 - 할일이 속한 분류를 보여줍니다 */
+/* 카테고리 배지 */
 .todo-item__badge {
   flex-shrink: 0;
   font-size: 12px;
@@ -124,36 +123,31 @@
   letter-spacing: 0.3px;
 }
 
-/* 편집 버튼 - 기본적으로 숨겨져 있다가 호버 시 나타납니다 */
+/* 편집 버튼 */
 .todo-item__edit {
   flex-shrink: 0;
   background: none;
   border: none;
-  color: #bdbdbd;
+  color: var(--color-border-medium);
   font-size: 15px;
   line-height: 1;
   cursor: pointer;
   padding: 0 4px;
   border-radius: 4px;
   transition: color 0.2s ease, background 0.2s ease;
-  opacity: 0; /* 기본적으로 숨깁니다 */
-}
-
-.todo-item:hover .todo-item__edit {
-  opacity: 1; /* 카드에 호버하면 나타납니다 */
 }
 
 .todo-item__edit:hover {
-  color: #5c6bc0;
-  background: #e8eaf6;
+  color: var(--color-primary);
+  background: var(--color-primary-surface);
 }
 
-/* Delete button */
+/* 삭제 버튼 */
 .todo-item__delete {
   flex-shrink: 0;
   background: none;
   border: none;
-  color: #bdbdbd;
+  color: var(--color-border-medium);
   font-size: 20px;
   line-height: 1;
   cursor: pointer;
@@ -169,67 +163,66 @@
 
 /* ── 편집 모드 스타일 ── */
 
-/* 편집 모드일 때 카드 스타일 - 파란 테두리로 강조합니다 */
 .todo-item--editing {
-  border-left-color: #5c6bc0 !important;
-  box-shadow: 0 0 0 2px #c5cae9;
+  border-left-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 2px var(--color-border-medium);
   gap: 8px;
 }
 
-/* 편집 모드 텍스트 input */
 .todo-item__edit-input {
   flex: 1;
-  border: 1px solid #c5cae9;
+  border: 1px solid var(--color-border-medium);
   border-radius: 6px;
   padding: 6px 10px;
   font-size: 14px;
-  color: #333;
+  color: var(--color-text);
   outline: none;
-  background: #f8f9ff;
-  min-width: 0; /* flex 안에서 줄어들 수 있게 합니다 */
+  background: var(--color-input-bg);
+  min-width: 0;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
 }
 
 .todo-item__edit-input:focus {
-  border-color: #5c6bc0;
-  background: #fff;
+  border-color: var(--color-primary);
+  background: var(--color-card);
 }
 
-/* 편집 모드 드롭다운 */
 .todo-item__edit-select {
-  border: 1px solid #c5cae9;
+  border: 1px solid var(--color-border-medium);
   border-radius: 6px;
   padding: 6px 8px;
   font-size: 13px;
-  color: #555;
-  background: #f8f9ff;
+  color: var(--color-text-medium);
+  background: var(--color-input-bg);
   outline: none;
   cursor: pointer;
   flex-shrink: 0;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
 }
 
 .todo-item__edit-select:focus {
-  border-color: #5c6bc0;
+  border-color: var(--color-primary);
 }
 
-/* 편집 모드 날짜 input */
 .todo-item__edit-date {
-  border: 1px solid #c5cae9;
+  border: 1px solid var(--color-border-medium);
   border-radius: 6px;
   padding: 6px 8px;
   font-size: 13px;
-  color: #555;
-  background: #f8f9ff;
+  color: var(--color-text-medium);
+  background: var(--color-input-bg);
   outline: none;
   cursor: pointer;
   width: 130px;
   flex-shrink: 0;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
 }
 
 .todo-item__edit-date:focus {
-  border-color: #5c6bc0;
+  border-color: var(--color-primary);
 }
 
-/* 저장 버튼 - 초록색 체크 표시 */
+/* 저장 버튼 */
 .todo-item__edit-save {
   flex-shrink: 0;
   background: none;
@@ -248,7 +241,7 @@
 }
 
 .todo-item__edit-save:disabled {
-  color: #bdbdbd;
+  color: var(--color-border-medium);
   cursor: not-allowed;
 }
 
@@ -257,7 +250,7 @@
   flex-shrink: 0;
   background: none;
   border: none;
-  color: #bdbdbd;
+  color: var(--color-border-medium);
   font-size: 20px;
   line-height: 1;
   cursor: pointer;
@@ -271,7 +264,7 @@
   background: #ffebee;
 }
 
-/* 모바일 화면(600px 이하)에서는 배지들이 아래 줄로 내려갑니다 */
+/* 모바일 화면 */
 @media (max-width: 600px) {
   .todo-item {
     flex-wrap: wrap;

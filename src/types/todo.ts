@@ -1,11 +1,11 @@
 // 카테고리 타입 - 할일을 분류하는 데 사용됩니다
-export type Category = '개인' | '업무' | '쇼핑' | '기타';
+export type Category = '개인' | '업무' | '쇼핑' | '회의' | '기타';
 
 // 중요도 타입 - 할일의 우선순위를 나타냅니다
 export type Priority = '높음' | '보통' | '낮음';
 
 // 사용 가능한 카테고리 목록 (화면에 표시할 순서대로 나열)
-export const CATEGORIES: Category[] = ['개인', '업무', '쇼핑', '기타'];
+export const CATEGORIES: Category[] = ['개인', '업무', '쇼핑', '회의', '기타'];
 
 // 사용 가능한 중요도 목록 (높은 순서대로 나열)
 export const PRIORITIES: Priority[] = ['높음', '보통', '낮음'];
@@ -15,6 +15,7 @@ export const CATEGORY_COLORS: Record<Category, string> = {
   '개인': '#4CAF50', // 초록색
   '업무': '#2196F3', // 파란색
   '쇼핑': '#FF9800', // 주황색
+  '회의': '#9C27B0', // 보라색
   '기타': '#9E9E9E', // 회색
 };
 

@@ -1,13 +1,15 @@
 {
   "version": "2.0",
-  "lastUpdated": "2026-03-02T03:13:20.920Z",
+  "lastUpdated": "2026-03-02T08:42:32.812Z",
   "activeFeatures": [
     "todo-claude",
     "TodoList",
     "CategoryFilter",
     "AddTodo",
     "TodoItem",
-    "due-date"
+    "due-date",
+    "Auth",
+    "supabase-migration"
   ],
   "primaryFeature": "todo-claude",
   "features": {
@@ -20,7 +22,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-02-27T12:52:57.253Z",
-        "lastUpdated": "2026-03-02T03:13:20.920Z"
+        "lastUpdated": "2026-03-02T08:42:32.812Z"
       },
       "lastFile": "/Users/david/Documents/todo-claude/src/App.tsx"
     },
@@ -89,6 +91,33 @@
       },
       "previousPhase": "check",
       "autoAdvanced": true
+    },
+    "Auth": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-03-02T07:49:49.867Z",
+        "lastUpdated": "2026-03-02T08:29:28.184Z"
+      },
+      "lastFile": "/Users/david/Documents/todo-claude/src/components/Auth/AuthForm.tsx"
+    },
+    "supabase-migration": {
+      "phase": "act",
+      "phaseNumber": 5,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-03-02T08:23:38.842Z",
+        "lastUpdated": "2026-03-02T08:23:38.843Z"
+      },
+      "previousPhase": "check",
+      "autoAdvanced": true
     }
   },
   "pipeline": {
@@ -99,7 +128,7 @@
   "session": {
     "startedAt": "2026-02-27T12:51:35.457Z",
     "onboardingCompleted": false,
-    "lastActivity": "2026-03-02T03:13:20.920Z"
+    "lastActivity": "2026-03-02T08:42:32.812Z"
   },
   "history": [
     {
@@ -266,6 +295,108 @@
     },
     {
       "timestamp": "2026-03-02T03:13:20.920Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-02T03:39:02.642Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-02T03:39:05.547Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-02T03:39:10.107Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-02T07:49:11.557Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-02T07:49:28.250Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-02T07:49:49.867Z",
+      "feature": "Auth",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-02T07:50:41.475Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-02T07:50:57.555Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-02T07:51:25.063Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-02T08:23:38.843Z",
+      "feature": "supabase-migration",
+      "phase": "act",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-02T08:28:52.486Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-02T08:29:08.552Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-02T08:29:14.977Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-02T08:29:22.431Z",
+      "feature": "Auth",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-02T08:29:28.184Z",
+      "feature": "Auth",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-02T08:40:07.905Z",
+      "feature": "todo-claude",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-02T08:42:32.812Z",
       "feature": "todo-claude",
       "phase": "do",
       "action": "updated"
