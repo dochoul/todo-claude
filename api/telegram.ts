@@ -42,9 +42,26 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
   const chatId: number = message.chat.id;
   const text: string = message.text || '';
 
-  // 명령어 파싱 (/추가 내용 or 추가 내용)
+  // 슬래시로 시작하는 경우만 명령어로 처리, 그 외 일반 텍스트는 할일 추가로 처리
+  const isCommand = text.startsWith('/');
   const [command, ...rest] = text.replace(/^\//, '').trim().split(' ');
   const args = rest.join(' ').trim();
+
+  // 명령어가 아닌 일반 텍스트 → 할일 자동 추가
+  if (!isCommand && text.trim()) {
+    await supabase.from('todos').insert({
+      user_id: USER_ID,
+      text: text.trim(),
+      completed: false,
+      category: '개인',
+      priority: '보통',
+      created_at: Date.now(),
+    });
+    await sendMessage(chatId, `➕ *"${text.trim()}"* 추가됐습니다!`);
+    res.statusCode = 200;
+    res.end('ok');
+    return;
+  }
 
   try {
     switch (command) {
@@ -127,8 +144,8 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
         await sendMessage(chatId, [
           '📌 *Todo Bot 사용법*',
           '',
+          '그냥 텍스트를 보내면 → 할일 추가',
           '`/목록` - 미완료 할일 보기',
-          '`/추가 [내용]` - 할일 추가',
           '`/완료 [번호]` - 완료 처리',
           '`/내아이디` - 내 Chat ID 확인',
         ].join('\n'));
