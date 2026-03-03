@@ -9,11 +9,11 @@ import { TodoList } from './components/TodoList/TodoList';
 import './App.css';
 
 export function App() {
-  // 테마 상태 관리 (라이트 / 다크 전환)
-  const { theme, toggleTheme } = useTheme();
-
   // 인증 상태 관리
   const { user, loading: authLoading, error: authError, signIn, signUp, signOut } = useAuth();
+
+  // 테마 상태 관리 (로그인 시 DB에 저장, 비로그인 시 localStorage 사용)
+  const { theme, toggleTheme } = useTheme(user?.id);
 
   // 할일 상태 관리 (로그인한 사용자의 할일만 불러옵니다)
   const { addTodo, updateTodo, deleteTodo, toggleTodo, filter, setFilter, filteredTodos, todoCounts, loading: todosLoading, error: todosError } = useTodos(user);
