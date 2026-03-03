@@ -173,6 +173,47 @@
   transform: none;
 }
 
+/* 구분선 */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border-medium);
+}
+
+/* 구글 로그인 버튼 */
+.auth-google {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 11px;
+  background: var(--color-card);
+  color: var(--color-text);
+  border: 1px solid var(--color-border-medium);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.auth-google:hover {
+  background: var(--color-surface);
+  border-color: var(--color-text-muted);
+}
+
 /* 모바일 */
 @media (max-width: 480px) {
   .auth-card {

@@ -11,7 +11,7 @@ import './App.css';
 
 export function App() {
   // 인증 상태 관리
-  const { user, loading: authLoading, error: authError, signIn, signUp, signOut } = useAuth();
+  const { user, loading: authLoading, error: authError, signIn, signUp, signInWithGoogle, signOut } = useAuth();
 
   // 테마 상태 관리 (로그인 시 DB에 저장, 비로그인 시 localStorage 사용)
   const { theme, toggleTheme } = useTheme(user?.id);
@@ -53,7 +53,7 @@ export function App() {
         >
           {themeToggleLabel}
         </button>
-        <AuthForm onSignIn={signIn} onSignUp={signUp} error={authError} />
+        <AuthForm onSignIn={signIn} onSignUp={signUp} onSignInWithGoogle={signInWithGoogle} error={authError} />
       </>
     );
   }
