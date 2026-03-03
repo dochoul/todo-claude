@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import type { User } from '@supabase/supabase-js';
 import { supabase } from '../lib/supabase';
 import { Todo, Category, Priority, Filter, CATEGORIES, isTodayDue } from '../types/todo';
@@ -44,14 +44,59 @@ export function useTodos(user: User | null) {
   // DB 작업 오류 메시지
   const [error, setError] = useState<string | null>(null);
 
+  // 낙관적 업데이트로 추가된 id를 추적 (Realtime 중복 방지)
+  const optimisticIds = useRef<Set<string>>(new Set());
+
+  // 웹 → 텔레그램 알림 헬퍼
+  async function notifyTelegram(action: 'add' | 'complete' | 'delete', text: string) {
+    try {
+      await fetch('/api/telegram-notify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action, text }),
+      });
+    } catch {
+      // 알림 실패는 조용히 무시
+    }
+  }
+
   // 로그인한 사용자가 바뀔 때마다 해당 사용자의 할일을 불러옵니다
   useEffect(() => {
     if (!user) {
-      // 로그인하지 않은 경우 목록을 비웁니다
       setTodos([]);
       return;
     }
     fetchTodos();
+
+    // Supabase Realtime 구독 (텔레그램 봇 등 외부 변경 반영)
+    const channel = supabase
+      .channel(`todos:${user.id}`)
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'todos', filter: `user_id=eq.${user.id}` },
+        (payload) => {
+          if (payload.eventType === 'INSERT') {
+            const newTodo = rowToTodo(payload.new as TodoRow);
+            // 낙관적 업데이트로 이미 추가된 항목은 건너뜁니다
+            if (optimisticIds.current.has(newTodo.id)) {
+              optimisticIds.current.delete(newTodo.id);
+              return;
+            }
+            setTodos((prev) => [newTodo, ...prev]);
+          } else if (payload.eventType === 'UPDATE') {
+            const updated = rowToTodo(payload.new as TodoRow);
+            setTodos((prev) => prev.map((t) => (t.id === updated.id ? updated : t)));
+          } else if (payload.eventType === 'DELETE') {
+            const deletedId = (payload.old as { id: string }).id;
+            setTodos((prev) => prev.filter((t) => t.id !== deletedId));
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, [user]);
 
   // Supabase에서 현재 사용자의 할일 목록을 가져오는 함수
@@ -99,14 +144,18 @@ export function useTodos(user: User | null) {
       setError('할일을 추가하는 중 오류가 발생했습니다.');
       console.error(insertError);
     } else {
-      // 서버에서 반환된 데이터를 상태에 추가합니다 (맨 앞에 추가)
-      setTodos((prev) => [rowToTodo(data as TodoRow), ...prev]);
+      const todo = rowToTodo(data as TodoRow);
+      // 낙관적으로 추가한 뒤 Realtime 중복 방지를 위해 id를 등록합니다
+      optimisticIds.current.add(todo.id);
+      setTodos((prev) => [todo, ...prev]);
+      notifyTelegram('add', todo.text);
     }
   }
 
   // 특정 할일을 Supabase에서 삭제하는 함수
   async function deleteTodo(id: string): Promise<void> {
     // 먼저 화면에서 즉시 제거합니다 (낙관적 업데이트 - 빠른 UX 제공)
+    const todo = todos.find((t) => t.id === id);
     setTodos((prev) => prev.filter((t) => t.id !== id));
 
     const { error: deleteError } = await supabase
@@ -118,6 +167,8 @@ export function useTodos(user: User | null) {
       // 삭제에 실패하면 다시 목록을 불러옵니다
       setError('할일을 삭제하는 중 오류가 발생했습니다.');
       fetchTodos();
+    } else if (todo) {
+      notifyTelegram('delete', todo.text);
     }
   }
 
@@ -167,6 +218,9 @@ export function useTodos(user: User | null) {
     if (toggleError) {
       setError('할일 상태를 변경하는 중 오류가 발생했습니다.');
       fetchTodos(); // 실패 시 서버 상태로 복원합니다
+    } else if (newCompleted) {
+      // 완료로 전환할 때만 알림 (미완료로 되돌리는 경우는 제외)
+      notifyTelegram('complete', todo.text);
     }
   }
 

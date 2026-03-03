@@ -5,7 +5,10 @@
       "Bash(npm install:*)",
       "WebFetch(domain:hiworks-design-system.hiworks.com)",
       "WebSearch",
-      "WebFetch(domain:www.npmjs.com)"
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:brm.io)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(curl:*)"
     ]
   },
   "enabledPlugins": {

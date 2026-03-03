@@ -116,6 +116,12 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
         break;
       }
 
+      // 내 Chat ID 확인
+      case '내아이디':
+      case 'myid':
+        await sendMessage(chatId, `🔑 내 Chat ID: \`${chatId}\`\n\nVercel 환경변수 \`TELEGRAM_CHAT_ID\`에 이 값을 설정하세요.`);
+        break;
+
       // 도움말
       default:
         await sendMessage(chatId, [
@@ -124,6 +130,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
           '`/목록` - 미완료 할일 보기',
           '`/추가 [내용]` - 할일 추가',
           '`/완료 [번호]` - 완료 처리',
+          '`/내아이디` - 내 Chat ID 확인',
         ].join('\n'));
     }
   } catch {
