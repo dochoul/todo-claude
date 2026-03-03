@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, KeyboardEvent } from 'react';
+import { Tag } from '@hiworks/ui';
 import {
   Todo, Category, CATEGORIES, Priority, PRIORITIES, PRIORITY_ICONS,
   CATEGORY_COLORS, PRIORITY_COLORS,
@@ -184,41 +185,35 @@ export function TodoItem({ todo, onToggle, onDelete, onUpdate }: TodoItemProps) 
 
       {/* D-Day 배지 - 마감일이 있을 때만 표시합니다 */}
       {dueDateStatus !== null && todo.dueDate !== undefined && (
-        <span
-          className={`todo-item__due-badge${dueDateStatus === 'overdue' ? ' todo-item__due-badge--overdue' : ''}`}
-          style={{
-            background: DUE_DATE_COLORS[dueDateStatus].bg,
-            color: DUE_DATE_COLORS[dueDateStatus].color,
-            borderColor: DUE_DATE_COLORS[dueDateStatus].border,
-          }}
+        <Tag.Square
+          id={`${todo.id}-duedate`}
+          backgroundColor={DUE_DATE_COLORS[dueDateStatus].bg}
+          fontColor={DUE_DATE_COLORS[dueDateStatus].color}
+          borderColor={DUE_DATE_COLORS[dueDateStatus].border}
         >
           {formatDueDateLabel(todo.dueDate)}
-        </span>
+        </Tag.Square>
       )}
 
       {/* 중요도 배지 */}
-      <span
-        className="todo-item__priority-badge"
-        style={{
-          background: `${priorityColor}1a`,
-          color: priorityColor,
-          borderColor: `${priorityColor}66`,
-        }}
+      <Tag.Square
+        id={`${todo.id}-priority`}
+        backgroundColor={`${priorityColor}1a`}
+        fontColor={priorityColor}
+        borderColor={`${priorityColor}66`}
       >
         {PRIORITY_ICONS[todo.priority]} {todo.priority}
-      </span>
+      </Tag.Square>
 
       {/* 카테고리 배지 */}
-      <span
-        className="todo-item__badge"
-        style={{
-          background: `${badgeColor}1a`,
-          color: badgeColor,
-          borderColor: `${badgeColor}66`,
-        }}
+      <Tag.Square
+        id={`${todo.id}-category`}
+        backgroundColor={`${badgeColor}1a`}
+        fontColor={badgeColor}
+        borderColor={`${badgeColor}66`}
       >
         {todo.category}
-      </span>
+      </Tag.Square>
 
       {/* 편집 버튼 - 호버 시 나타납니다 */}
       <button

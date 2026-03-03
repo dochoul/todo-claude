@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { Button } from '@hiworks/ui';
 import { useTheme } from './hooks/useTheme';
 import { useAuth } from './hooks/useAuth';
 import { useTodos } from './hooks/useTodos';
@@ -78,13 +79,14 @@ export function App() {
                 {themeToggleLabel}
               </button>
               <span className="app__user-email">{user.email}</span>
-              <button
+              <Button
+                kind="cancel"
+                size="small"
                 type="button"
-                className="app__logout"
                 onClick={signOut}
               >
                 로그아웃
-              </button>
+              </Button>
             </div>
           </div>
           <p className="app__subtitle">

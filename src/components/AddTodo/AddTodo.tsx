@@ -117,7 +117,7 @@ export function AddTodo({ onAdd }: AddTodoProps) {
       {/* type="button"을 명시해서 Enter 키로 인한 자동 클릭을 방지합니다 */}
       <Button
         kind="filled"
-        size="regular"
+        size="large"
         type="button"
         onClick={handleSubmit}
         disabled={!text.trim()}
