@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { Button } from '@hiworks/ui';
 import { useTheme } from './hooks/useTheme';
 import { useAuth } from './hooks/useAuth';
 import { useTodos } from './hooks/useTodos';
@@ -6,14 +7,15 @@ import { AuthForm } from './components/Auth/AuthForm';
 import { AddTodo } from './components/AddTodo/AddTodo';
 import { CategoryFilter } from './components/CategoryFilter/CategoryFilter';
 import { TodoList } from './components/TodoList/TodoList';
+import { TelegramSettings } from './components/TelegramSettings/TelegramSettings';
 import './App.css';
 
 export function App() {
-  // 테마 상태 관리 (라이트 / 다크 전환)
-  const { theme, toggleTheme } = useTheme();
-
   // 인증 상태 관리
-  const { user, loading: authLoading, error: authError, signIn, signUp, signOut } = useAuth();
+  const { user, loading: authLoading, error: authError, signIn, signUp, signInWithGoogle, signOut } = useAuth();
+
+  // 테마 상태 관리 (로그인 시 DB에 저장, 비로그인 시 localStorage 사용)
+  const { theme, toggleTheme } = useTheme(user?.id);
 
   // 할일 상태 관리 (로그인한 사용자의 할일만 불러옵니다)
   const { addTodo, updateTodo, deleteTodo, toggleTodo, filter, setFilter, filteredTodos, todoCounts, loading: todosLoading, error: todosError } = useTodos(user);
@@ -52,7 +54,7 @@ export function App() {
         >
           {themeToggleLabel}
         </button>
-        <AuthForm onSignIn={signIn} onSignUp={signUp} error={authError} />
+        <AuthForm onSignIn={signIn} onSignUp={signUp} onSignInWithGoogle={signInWithGoogle} error={authError} />
       </>
     );
   }
@@ -78,13 +80,14 @@ export function App() {
                 {themeToggleLabel}
               </button>
               <span className="app__user-email">{user.email}</span>
-              <button
+              <Button
+                kind="cancel"
+                size="small"
                 type="button"
-                className="app__logout"
                 onClick={signOut}
               >
                 로그아웃
-              </button>
+              </Button>
             </div>
           </div>
           <p className="app__subtitle">
@@ -97,6 +100,7 @@ export function App() {
           <div className="app__error">{todosError}</div>
         )}
 
+        <TelegramSettings userId={user.id} />
         <AddTodo onAdd={addTodo} />
 
         <CategoryFilter

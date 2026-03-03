@@ -95,7 +95,7 @@ html {
 /* 테마 전환 시 부드러운 트랜지션 */
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR',
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR',
     'Apple SD Gothic Neo', sans-serif;
   font-size: 16px;
   line-height: 1.5;

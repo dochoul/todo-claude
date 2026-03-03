@@ -1,4 +1,5 @@
 import { useState, useRef, KeyboardEvent } from 'react';
+import { Button } from '@hiworks/ui';
 import { Category, CATEGORIES, Priority, PRIORITIES, PRIORITY_ICONS, toMidnightTimestamp } from '../../types/todo';
 import './AddTodo.css';
 
@@ -114,14 +115,15 @@ export function AddTodo({ onAdd }: AddTodoProps) {
 
       {/* 할일 추가 버튼 - 내용이 없으면 비활성화됩니다 */}
       {/* type="button"을 명시해서 Enter 키로 인한 자동 클릭을 방지합니다 */}
-      <button
+      <Button
+        kind="filled"
+        size="large"
         type="button"
-        className="add-todo__button"
         onClick={handleSubmit}
         disabled={!text.trim()}
       >
         추가
-      </button>
+      </Button>
     </div>
   );
 }

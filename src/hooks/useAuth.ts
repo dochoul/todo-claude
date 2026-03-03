@@ -9,7 +9,8 @@ interface UseAuthReturn {
   error: string | null;     // 오류 메시지
   signIn: (email: string, password: string) => Promise<boolean>;    // 로그인 함수 (true=성공)
   signUp: (email: string, password: string) => Promise<boolean>;    // 회원가입 함수 (true=성공)
-  signOut: () => Promise<void>;                                   // 로그아웃 함수
+  signInWithGoogle: () => Promise<void>;                            // 구글 로그인 함수
+  signOut: () => Promise<void>;                                     // 로그아웃 함수
 }
 
 // 로그인/로그아웃/세션 관리를 담당하는 커스텀 훅
@@ -63,13 +64,23 @@ export function useAuth(): UseAuthReturn {
     return true; // 성공
   }
 
+  // 구글 OAuth로 로그인하는 함수 (팝업 없이 리디렉션 방식)
+  async function signInWithGoogle(): Promise<void> {
+    await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin,
+      },
+    });
+  }
+
   // 로그아웃 함수
   async function signOut(): Promise<void> {
     setError(null);
     await supabase.auth.signOut();
   }
 
-  return { user, loading, error, signIn, signUp, signOut };
+  return { user, loading, error, signIn, signUp, signInWithGoogle, signOut };
 }
 
 // Supabase 영어 오류 메시지를 한국어로 변환하는 함수
