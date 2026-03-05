@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 120" width="480" height="120">
+  <defs>
+    <linearGradient id="doneGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2D2D2D"/>
+      <stop offset="100%" style="stop-color:#555555"/>
+    </linearGradient>
+    <linearGradient id="itGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#6C63FF"/>
+      <stop offset="100%" style="stop-color:#48C6EF"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 체크박스 -->
+  <rect x="4" y="16" width="78" height="78" rx="14" ry="14"
+    fill="none" stroke="url(#itGrad)" stroke-width="6"/>
+  <!-- 체크마크 -->
+  <polyline points="20,55 36,71 66,35"
+    stroke="url(#itGrad)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- Done 텍스트 -->
+  <text x="95" y="86"
+    font-family="'Arial Rounded MT Bold', 'Helvetica Neue', Arial, sans-serif"
+    font-size="90"
+    font-weight="900"
+    fill="url(#doneGrad)"
+    letter-spacing="-2">Done</text>
+
+  <!-- IT 텍스트 -->
+  <text x="339" y="88"
+    font-family="'Arial Rounded MT Bold', 'Helvetica Neue', Arial, sans-serif"
+    font-size="90"
+    font-weight="900"
+    fill="url(#itGrad)"
+    letter-spacing="-2">IT</text>
+
+  <!-- IT 언더라인 -->
+  <line x1="339" y1="100" x2="468" y2="100" stroke="url(#itGrad)" stroke-width="5" stroke-linecap="round"/>
+</svg>

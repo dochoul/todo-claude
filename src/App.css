@@ -33,31 +33,9 @@
   margin-bottom: 0;
 }
 
-.app__title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  font-size: 36px;
-  font-weight: 800;
-  color: var(--color-primary);
-  margin: 0 0 8px;
-  letter-spacing: -0.5px;
-  transition: color 0.3s ease;
-}
-
-.app__title-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
+.app__logo {
   height: 48px;
-  background: var(--color-primary);
-  color: #ffffff;
-  border-radius: 14px;
-  font-size: 24px;
-  box-shadow: 0 4px 12px rgba(92, 107, 192, 0.35);
-  transition: background 0.3s ease;
+  width: auto;
 }
 
 .app__subtitle {
@@ -238,13 +216,7 @@
     padding: 24px 12px 48px;
   }
 
-  .app__title {
-    font-size: 28px;
-  }
-
-  .app__title-icon {
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
+  .app__logo {
+    height: 38px;
   }
 }

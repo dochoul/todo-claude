@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Button } from '@hiworks/ui';
+import doneItLogo from './assets/done-it-logo.svg';
 import { useTheme } from './hooks/useTheme';
 import { useAuth } from './hooks/useAuth';
 import { useTodos } from './hooks/useTodos';
@@ -65,10 +66,7 @@ export function App() {
       <div className="app__container">
         <header className="app__header">
           <div className="app__header-top">
-            <h1 className="app__title">
-              <span className="app__title-icon">&#10003;</span>
-              Todo
-            </h1>
+            <img src={doneItLogo} alt="DoneIt" className="app__logo" />
             {/* 사용자 이메일 + 테마 토글 + 로그아웃 */}
             <div className="app__user">
               <button

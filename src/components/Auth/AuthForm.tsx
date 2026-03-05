@@ -1,4 +1,5 @@
 import { useState, KeyboardEvent } from 'react';
+import doneItLogo from '../../assets/done-it-logo.svg';
 import './AuthForm.css';
 
 // AuthForm 컴포넌트가 부모로부터 받는 속성(props) 정의
@@ -74,8 +75,7 @@ export function AuthForm({ onSignIn, onSignUp, onSignInWithGoogle, error }: Auth
       <div className="auth-card">
         {/* 앱 제목 */}
         <div className="auth-header">
-          <span className="auth-icon">&#10003;</span>
-          <h1 className="auth-title">Todo</h1>
+          <img src={doneItLogo} alt="DoneIt" className="auth-logo" />
           <p className="auth-subtitle">할일을 어디서든 관리하세요</p>
         </div>
 

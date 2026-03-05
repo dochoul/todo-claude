@@ -26,29 +26,11 @@
   margin-bottom: 28px;
 }
 
-/* 체크 아이콘 */
-.auth-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  background: var(--color-primary);
-  color: #ffffff;
-  border-radius: 12px;
-  font-size: 24px;
-  font-weight: 700;
+/* 로고 이미지 */
+.auth-logo {
+  width: 200px;
+  height: auto;
   margin-bottom: 12px;
-  transition: background 0.3s ease;
-}
-
-/* 앱 제목 */
-.auth-title {
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--color-primary);
-  margin: 0 0 6px;
-  transition: color 0.3s ease;
 }
 
 /* 부제목 */
